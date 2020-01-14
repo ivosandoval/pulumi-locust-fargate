@@ -1,0 +1,15 @@
+config:
+  aws:region: eu-west-1
+  django-serverless:domain: example.com
+  django-serverless:subdomain: dev.example.com
+  # Django
+  django-serverless:DEBUG: "1"
+  django-serverless:SECRET_KEY:
+    secure: AAABACLLBj+vfRoiCZIVwvP+AuwO4vqL54FhfPmn7UfhhquimVZTpcIbzvy56fRpQoNynrO7xjAAIEdi0KLgvRNFcxwa7zZuKFK/YPaD7oYIgg==
+  # AWS Lambda
+  django-serverless:dist_directory: dist
+  django-serverless:layer_filename: pythonRequirements.zip
+  # Serverless
+  django-serverless:serverless_handler: wsgi_handler.handler
+  django-serverless:serverless_runtime: python3.7
+  django-serverless:serverless_service: django-serverless
