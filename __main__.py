@@ -4,7 +4,7 @@ import pulumi
 if pulumi.get_stack() == 'core':
     import core
 else:
-    import compute, api, storage, network
+    import ecs
 
 
 # TODO: make components
