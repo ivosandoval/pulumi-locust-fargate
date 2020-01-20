@@ -1,5 +1,6 @@
 import base64
 import hashlib
+import json
 
 import pulumi
 config = pulumi.Config()
@@ -42,3 +43,12 @@ def format_resource_name(name):
         stack=pulumi.get_stack(),
     )
     return resource_name
+
+def json_as_string_from_file(path):
+    """
+    Return a string json from json file
+    """
+    with open('locust-master.json') as f:
+        json_data=json.load(f)
+        data_str=json.dumps(json_data)
+        return data_str

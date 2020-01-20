@@ -1,0 +1,48 @@
+[ 
+{
+  "name": "locust-master",
+  "image": "rmrbest/locust",
+  "cpu": 1,
+  "memory": 256,
+  "essential": true,
+  "environment": [
+    {
+      "name": "ATTACKED_HOST",
+      "value": "https://nuage.studio"
+    },    
+    {
+      "name": "LOCUST_MODE",
+      "value": "slave"
+    },  
+    {
+      "name": "LOCUST_MASTER",
+      "value": "176.34.148.145"
+    },  
+    {
+      "name": "LOCUST_MASTER_BIND_PORT",
+      "value": "5557"
+    },    
+    {
+      "name": "TASK_DELAY",
+      "value": "0"
+    },
+    {
+      "name": "NO_PROXY",
+      "value": "master"
+    },    
+    {
+      "name": "QUIET_MODE",
+      "value": "${QUIET_MODE:-false}"
+    }    
+  ],
+  "logConfiguration": {
+    "logDriver": "awslogs",
+    "options": {
+        "awslogs-group": "nuage-studio",
+        "awslogs-region": "eu-west-1",
+        "awslogs-create-group": "true",
+        "awslogs-stream-prefix": "locust-slave"
+    }
+  }
+}
+]
