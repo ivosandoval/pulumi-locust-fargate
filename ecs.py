@@ -25,7 +25,7 @@ locust_master_task_definiton = ecs.TaskDefinition(
     container_definitions=json_as_string_from_file('locust-master.json'),
     family=f'{pulumi.get_stack()}-locust-master',
     cpu="512",
-    memory="1GB",
+    memory="1024",
     network_mode="awsvpc",
     execution_role_arn="arn:aws:iam::918040319999:role/ecsTaskExecutionRole",
     requires_compatibilities=[
@@ -39,15 +39,15 @@ locust_slave_task_definiton = ecs.TaskDefinition(
     container_definitions=json_as_string_from_file('locust-slave.json'),
     family=f'{pulumi.get_stack()}-locust-slave',
     cpu="512",
-    memory="1GB",
+    memory="1024",
     network_mode="awsvpc",
     execution_role_arn="arn:aws:iam::918040319999:role/ecsTaskExecutionRole",
     requires_compatibilities=[
         "FARGATE"
     ],
     opts=pulumi.ResourceOptions(
-        depends_on=[locust_master_task_definiton]
-    ),
+        depends_on=[locust_master_task_definiton]        
+    )
 
 ) 
 
@@ -68,7 +68,11 @@ locustMasterService = ecs.Service(
     desired_count=1,
     service_registries={
         "registry_arn" : config.require('service_discovery_arn') #arn:aws:servicediscovery:eu-west-1:918040319999:service/srv-bcipe6i2rdsnkgaz"
-    }
+    },
+    opts=pulumi.ResourceOptions(
+        ignore_changes=["resource_name"]
+    )
+
 
 )
 
