@@ -48,7 +48,7 @@ def json_as_string_from_file(path):
     """
     Return a string json from json file
     """
-    with open('locust-master.json') as f:
+    with open(path) as f:
         json_data=json.load(f)
         data_str=json.dumps(json_data)
         return data_str

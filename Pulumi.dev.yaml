@@ -1,4 +1,4 @@
 config:
   aws:region: eu-west-1
   ecs-nuage:dist_directory: fargate
-  ecs-nuage:replicas: "1"
+  ecs-nuage:replicas: "2"

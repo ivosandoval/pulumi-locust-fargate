@@ -36,7 +36,6 @@ locust_master_task_definiton = ecs.TaskDefinition(
 
 locust_slave_task_definiton = ecs.TaskDefinition(
     resource_name=format_resource_name(name='eu-west-1'),
-    opts=None,
     container_definitions=json_as_string_from_file('locust-slave.json'),
     family=f'{pulumi.get_stack()}-locust-slave',
     cpu="512",
@@ -45,7 +44,11 @@ locust_slave_task_definiton = ecs.TaskDefinition(
     execution_role_arn="arn:aws:iam::918040319999:role/ecsTaskExecutionRole",
     requires_compatibilities=[
         "FARGATE"
-    ]
+    ],
+    opts=pulumi.ResourceOptions(
+        depends_on=[locust_master_task_definiton]
+    ),
+
 ) 
 
 """
@@ -54,7 +57,7 @@ TODO: Extract that Service as method, and call for each service created to avoid
 
 locustMasterService = ecs.Service(
     cluster=ecs_cluster.arn,
-    resource_name=format_resource_name(name='eu-west-1'),
+    resource_name=format_resource_name(name='master-eu-west-1'),
     task_definition=locust_master_task_definiton.arn,
     network_configuration={
         "security_groups" : ["sg-0eae5b78fc45c4b24"],        
@@ -62,21 +65,28 @@ locustMasterService = ecs.Service(
         "assign_public_ip": True
     },
     launch_type="FARGATE",
-    desired_count=1
+    desired_count=1,
+    service_registries={
+        "registry_arn" : config.require('service_discovery_arn') #arn:aws:servicediscovery:eu-west-1:918040319999:service/srv-bcipe6i2rdsnkgaz"
+    }
+
 )
 
-locustMasterService = ecs.Service(
+locustSlaveService = ecs.Service(
     cluster=ecs_cluster.arn,
     resource_name=format_resource_name(name='slave-eu-west-1'),
     task_definition=locust_slave_task_definiton.arn,
     network_configuration={
         "security_groups" : ["sg-0eae5b78fc45c4b24"],        
         "subnets" : ["subnet-0409a0a361e0101ad"],
-        "assign_public_ip": False
+        "assign_public_ip": True
     },
     launch_type="FARGATE",
-    desired_count=config.require('replicas')
-    
+    desired_count=config.require('replicas'),
+    opts=pulumi.ResourceOptions(
+        depends_on=[locustMasterService]
+    ),
+
 )
 
 

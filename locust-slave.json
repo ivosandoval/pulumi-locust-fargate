@@ -1,6 +1,6 @@
 [ 
 {
-  "name": "locust-master",
+  "name": "locust-slave",
   "image": "rmrbest/locust",
   "cpu": 1,
   "memory": 256,
@@ -16,7 +16,7 @@
     },  
     {
       "name": "LOCUST_MASTER",
-      "value": "176.34.148.145"
+      "value": "locust-master.locust"
     },  
     {
       "name": "LOCUST_MASTER_BIND_PORT",
