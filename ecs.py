@@ -15,6 +15,8 @@ ecs_cluster = ecs.Cluster(
 )
 
 
+
+
 """
 TODO: Extract that task_definition as method, and call for each task definition created to avoid code duplication
 """
@@ -48,6 +50,7 @@ locust_slave_task_definiton = ecs.TaskDefinition(
     opts=pulumi.ResourceOptions(
         depends_on=[locust_master_task_definiton]        
     )
+    
 
 ) 
 
@@ -60,8 +63,8 @@ locustMasterService = ecs.Service(
     resource_name=format_resource_name(name='master-eu-west-1'),
     task_definition=locust_master_task_definiton.arn,
     network_configuration={
-        "security_groups" : ["sg-0eae5b78fc45c4b24"],        
-        "subnets" : ["subnet-0409a0a361e0101ad"],
+        "security_groups" : [config.require('security_group')], #["sg-0eae5b78fc45c4b24"],        
+        "subnets" : [config.require('subnets')], #["subnet-0409a0a361e0101ad"],
         "assign_public_ip": True
     },
     launch_type="FARGATE",
@@ -81,8 +84,8 @@ locustSlaveService = ecs.Service(
     resource_name=format_resource_name(name='slave-eu-west-1'),
     task_definition=locust_slave_task_definiton.arn,
     network_configuration={
-        "security_groups" : ["sg-0eae5b78fc45c4b24"],        
-        "subnets" : ["subnet-0409a0a361e0101ad"],
+        "security_groups" : [config.require('security_group')],        
+        "subnets" : [config.require('subnets')],
         "assign_public_ip": True
     },
     launch_type="FARGATE",
