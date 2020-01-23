@@ -1,4 +1,10 @@
 config:
   aws:region: eu-west-1
   ecs-nuage:dist_directory: fargate
-  ecs-nuage:replicas: "2"
+  ecs-nuage:private_dns_name: locust2
+  ecs-nuage:replicas: "1"
+  ecs-nuage:security_group: sg-0eae5b78fc45c4b24
+  ecs-nuage:service_discovery_arn: arn:aws:servicediscovery:eu-west-1:918040319999:service/srv-bcipe6i2rdsnkgaz
+  ecs-nuage:service_discovery_name: locut2
+  ecs-nuage:subnets: subnet-0409a0a361e0101ad
+  ecs-nuage:vpc_id: vpc-0af375142a71c300a

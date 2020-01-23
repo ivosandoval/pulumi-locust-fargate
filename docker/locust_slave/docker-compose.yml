@@ -1,0 +1,19 @@
+version: '2'
+services:
+  slave:
+    container_name: master
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: nuage-studio
+        awslogs-region: eu-west-1
+        awslogs-stream-prefix: locust-slave     
+    image: "rmrbest/locust"    
+    environment:
+      ATTACKED_HOST: https://nuage.studio
+      LOCUST_MODE: slave
+      LOCUST_MASTER: 18.203.98.222
+      LOCUST_MASTER_BIND_PORT: 5557
+      NO_PROXY: master
+      TASK_DELAY: 0
+      QUIET_MODE: "${QUIET_MODE:-false}" 

@@ -1,0 +1,18 @@
+version: 1
+task_definition:
+  task_execution_role: ecsTaskExecutionRole
+  ecs_network_mode: awsvpc
+  task_size:
+    mem_limit: 512
+    cpu_limit: 256
+  volumes:
+    name: "locust_files" 
+run_params:
+  network_configuration:
+    awsvpc_configuration:
+      subnets:
+        - "subnet-0409a0a361e0101ad"
+        - "subnet-012e58917cc8c2546"
+      security_groups:
+        - "sg-0eae5b78fc45c4b24"
+      assign_public_ip: ENABLED
