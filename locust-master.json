@@ -1,3 +1,4 @@
+
 [ 
 {
   "name": "locust-master",
@@ -19,6 +20,13 @@
       "hostPort": 5558
     }
   ],
+  "mountPoints": [
+    {
+      "sourceVolume": "locust-storage",
+      "containerPath": "/locust"
+      
+    }
+  ],  
   "environment": [
     {
       "name": "ATTACKED_HOST",
@@ -50,7 +58,6 @@
         "awslogs-stream-prefix": "locust"
     }
   }
-}
-]
+}]
 
 
