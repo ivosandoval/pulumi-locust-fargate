@@ -3,11 +3,6 @@
 # serverless-kit-aws
 Serverless kit is a Pulumi template that deploys an AWS stack for website hosting
 
-[![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new)
-
-# serverless-kit-aws
-Serverless kit is a Pulumi template that deploys an AWS stack for website hosting
-
 ## Dependencies
 
 * You need a VPC, subnets and security group created
